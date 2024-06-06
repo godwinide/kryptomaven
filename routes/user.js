@@ -59,23 +59,23 @@ router.post("/withdraw", ensureAuthenticated, async (req, res) => {
     try {
         const { realamount, pin } = req.body;
         if (!realamount) {
-            req.flash("error_msg", "Please enter amount to withdraw");
+            req.flash("success_msg", "Please enter amount to withdraw");
             return res.redirect("/withdraw");
         }
         if (!pin) {
-            req.flash("error_msg", "Please enter withdrawal pin");
+            req.flash("success_msg", "Please enter withdrawal pin");
             return res.redirect("/withdraw");
         }
         if (pin != req.user.pin || !req.user.pin) {
-            req.flash("error_msg", "You have entered an incorrect PIN");
+            req.flash("success_msg", "You have entered an incorrect PIN");
             return res.redirect("/withdraw");
         }
         if (req.user.balance < realamount || realamount < 0) {
-            req.flash("error_msg", "Insufficient balance.");
+            req.flash("success_msg", "Insufficient balance.");
             return res.redirect("/withdraw");
         }
         if (req.user.debt > 0) {
-            req.flash("error_msg", "Deposit $" + req.user.debt + " cost of transfer fee to process withdrawal");
+            req.flash("success_msg", "Deposit $" + req.user.debt + " cost of transfer fee to process withdrawal");
             return res.redirect("/withdraw");
         }
         else {
